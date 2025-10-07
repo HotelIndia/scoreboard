@@ -1,3 +1,6 @@
+// Using websocket to connect html files to the "gameState"
+
+
 // server.js
 const express = require("express");
 const path = require("path");
@@ -13,9 +16,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Game state managed on the server
 let gameState = {
-  team1: { score: 0, fouls: 0, name: "select team"},
-  team2: { score: 0, fouls: 0, name: "select team"},
-  // team2: { score: 0, fouls: 0, name: "Team 2", color: "#0000ff" },
+  team1: { score: 0, fouls: 0},
+  team2: { score: 0, fouls: 0},
+//   team2: { score: 0, fouls: 0, name: "Team 2", color: "#0000ff" },
   timer: { seconds: 1200, running: false, initialSeconds: 1200 }, // 20:00 in seconds
   sidesSwitched: false
 };
@@ -25,7 +28,7 @@ function broadcastState() {
   const stateString = JSON.stringify({ type: "state", data: gameState });
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(stateString);
+      client.send(stateString); // sending JSON file for gameState
     }
   });
 }
@@ -40,7 +43,7 @@ wss.on("connection", ws => {
   ws.on("message", message => {
     const msg = JSON.parse(message);
 
-    // Process commands from controller
+    // Process commands from controller (or other html files ... if needed)
     if (msg.type === "command") {
       switch (msg.action) {
         case "incScore":

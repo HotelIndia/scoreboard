@@ -45,7 +45,7 @@ function setTeam(team) {
   
   // Map the dropdown to the correct team based on current sides state
   let actualTeam = team;
-  if (currentState && currentState.sidesSwitched) {
+  if (currentState && currentState.sidesSwitched) { // true if on same side?
     // If sides are switched, map the dropdowns to the opposite teams
     actualTeam = team === 'team1' ? 'team2' : 'team1';
   }

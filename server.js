@@ -1,6 +1,5 @@
 // Using websocket to connect html files to the "gameState"
 
-
 // server.js
 const express = require("express");
 const path = require("path");
